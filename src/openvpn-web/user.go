@@ -42,6 +42,10 @@ func (u *User) BeforeSave(tx *gorm.DB) (err error) {
 
 	val := reflect.ValueOf(u).Elem()
 	for i := 0; i < val.NumField(); i++ {
+		if val.Type().Field(i).Name == "Password" {
+			continue
+		}
+
 		fieldVal := val.Field(i)
 		if fieldVal.Kind() == reflect.String && fieldVal.CanSet() {
 			rawStr := val.Field(i).String()
