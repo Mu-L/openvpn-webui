@@ -52,6 +52,11 @@ type ClientUrlConfig struct {
 	Android string `json:"android" mapstructure:"android"`
 }
 
+type MfaAppUrlConfig struct {
+	Ios     string `json:"ios" mapstructure:"ios"`
+	Android string `json:"android" mapstructure:"android"`
+}
+
 type OvpnConfig struct {
 	OvpnPort       int    `json:"ovpn_port" mapstructure:"ovpn_port"`
 	OvpnProto      string `json:"ovpn_proto" mapstructure:"ovpn_proto"`
@@ -73,6 +78,7 @@ type config struct {
 	} `json:"system" mapstructure:"system"`
 	Client struct {
 		ClientUrl ClientUrlConfig `json:"client_url" mapstructure:"client_url"`
+		MfaAppUrl MfaAppUrlConfig `json:"mfa_app_url" mapstructure:"mfa_app_url"`
 	} `json:"client" mapstructure:"client"`
 	Openvpn OvpnConfig `json:"openvpn" mapstructure:"openvpn"`
 }
@@ -136,6 +142,9 @@ func initConfig() {
 	viper.SetDefault("client.client_url.linux", "https://openvpn.net/openvpn-client-for-linux/")
 	viper.SetDefault("client.client_url.android", "https://play.google.com/store/apps/details?id=net.openvpn.openvpn")
 	viper.SetDefault("client.client_url.ios", "https://itunes.apple.com/us/app/openvpn-connect/id590379981?mt=8")
+
+	viper.SetDefault("client.mfa_app_url.ios", "https://apps.apple.com/us/app/google-authenticator/id388497605")
+	viper.SetDefault("client.mfa_app_url.android", "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2")
 
 	viper.SetDefault("openvpn.ovpn_port", 1194)
 	viper.SetDefault("openvpn.ovpn_proto", "udp")

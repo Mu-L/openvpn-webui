@@ -35,6 +35,9 @@ $(document).on('click', '#settings', function () {
     $('#androidClientUrl').val(data.client.client_url.android);
     $('#iosClientUrl').val(data.client.client_url.ios);
 
+    $('#androidMfaAppUrl').val(data.client.mfa_app_url.android);
+    $('#iosMfaAppUrl').val(data.client.mfa_app_url.ios);
+
     $('#ovpnPort').val(data.openvpn.ovpn_port);
     $('#ovpnProto').val(data.openvpn.ovpn_proto);
     $('#ovpnGateway').prop('checked', data.openvpn.ovpn_gateway);
@@ -496,7 +499,7 @@ $('#emailTest').submit(function () {
   return false;
 });
 
-// client url
+// client
 $(document).on('focus', '#windowsClientUrl', function () {
   $(this).data('oldValue', $(this).val());
 });
@@ -568,6 +571,36 @@ $(document).on('blur', '#iosClientUrl', function () {
   if (oldValue === newValue) return;
 
   request.post('/settings', { 'client.client_url.ios': newValue }).then((data) => {
+    message.success(data.message);
+  });
+});
+
+$(document).on('focus', '#androidMfaAppUrl', function () {
+  $(this).data('oldValue', $(this).val());
+});
+
+$(document).on('blur', '#androidMfaAppUrl', function () {
+  const oldValue = $(this).data('oldValue');
+  const newValue = $(this).val();
+
+  if (oldValue === newValue) return;
+
+  request.post('/settings', { 'client.mfa_app_url.android': newValue }).then((data) => {
+    message.success(data.message);
+  });
+});
+
+$(document).on('focus', '#iosMfaAppUrl', function () {
+  $(this).data('oldValue', $(this).val());
+});
+
+$(document).on('blur', '#iosMfaAppUrl', function () {
+  const oldValue = $(this).data('oldValue');
+  const newValue = $(this).val();
+
+  if (oldValue === newValue) return;
+
+  request.post('/settings', { 'client.mfa_app_url.ios': newValue }).then((data) => {
     message.success(data.message);
   });
 });
